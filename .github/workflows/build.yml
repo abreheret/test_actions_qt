@@ -50,6 +50,9 @@ jobs:
           cd build
           cmake ..
           cmake --build . --config Release
+          
+      - name: Upload 
+        run: |
           cmake --build . --config Release --target upload_file
           
           
