@@ -1,0 +1,52 @@
+name: build
+on: [push]
+
+
+jobs:
+  Main:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest] #, macos-latest]
+        
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+          
+      - name: Compile With CMake   
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          cmake --build . --config Release
+          
+  Windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ilammy/msvc-dev-cmd@v1.4.1     
+      
+      - name: install CMake  
+        uses: lukka/get-cmake@latest          
+      
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+
+      - name: Compile With CMake   
+        run: |
+          mkdir build
+          cd build
+          cmake -DOpenCV_DIR=C:\tools\opencv\build ..
+          cmake --build . --config Release
+          
+          
+# Upload Result
+#    - name: upload executable
+#      uses: actions/upload-artifact@v2
+#      with:
+#        name: ${{matrix.os}}
+#        path: |
+#          ouputnamefile
