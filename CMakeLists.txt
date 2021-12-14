@@ -11,6 +11,8 @@ find_package(Qt5Gui REQUIRED)
 qt5_wrap_ui(UI_HDRS notepad.ui )
 qt5_add_resources(MOCED_RESOURCES notepad.qrc)
 
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+
 add_executable(QtNotepad MACOSX_BUNDLE WIN32
     main.cpp notepad.cpp notepad.h notepad.ui
 	${MOCED_RESOURCES}

@@ -39,7 +39,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake -DOpenCV_DIR=C:\tools\opencv\build ..
+          cmake ..
           cmake --build . --config Release
           
           
