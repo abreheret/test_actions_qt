@@ -51,15 +51,12 @@ jobs:
           cmake ..
           cmake --build . --config Release
           
-      - name: Upload 
+      - name: Make Zip 
         run: |
-          cmake --build build --config Release --target upload_file
+          cmake --build build --config Release --target make_zip
           
-          
-# Upload Result
-#    - name: upload executable
-#      uses: actions/upload-artifact@v2
-#      with:
-#        name: ${{matrix.os}}
-#        path: |
-#          ouputnamefile
+      - name: Upload Zip
+        uses: actions/upload-artifact@v2
+        with:
+          name: Release-Windows
+          path: build\Release

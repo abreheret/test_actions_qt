@@ -24,7 +24,7 @@ message("QT5_DIR = ${QT5_DIR}")
 if( MSVC )  # ---------------------------- WINDOWS --------------------------------------------------------------------
 	add_custom_target(make_zip 
 		COMMAND windeployqt ${CMAKE_CURRENT_BINARY_DIR}/Release/QtNotepad.exe
-		COMMAND ${CMAKE_COMMAND} -E tar "cfv" "QtNotepad.zip" --format=zip ${CMAKE_CURRENT_BINARY_DIR}
+		COMMAND ${CMAKE_COMMAND} -E tar "cfv" "QtNotepad.zip" --format=zip ${CMAKE_CURRENT_BINARY_DIR}/Release
 		DEPENDS QtNotepad)
     find_program(CURL curl)
 	if( NOT CURL-NOTFOUND )
