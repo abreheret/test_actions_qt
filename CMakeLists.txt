@@ -17,7 +17,23 @@ add_executable(QtNotepad MACOSX_BUNDLE WIN32
     main.cpp notepad.cpp notepad.h notepad.ui
 	${MOCED_RESOURCES}
 	${UI_HDRS})
-target_link_libraries(QtNotepad Qt5::Gui Qt5::Widgets) # Qt5::Core)	
+target_link_libraries(QtNotepad Qt5::Gui Qt5::Widgets)
+
+message("QT5_DIR = ${QT5_DIR}")
+
+if( MSVC )  # ---------------------------- WINDOWS --------------------------------------------------------------------
+	add_custom_target(make_zip 
+		COMMAND ${QT5_DIR}/../../bin/windeployqt ${CMAKE_CURRENT_BINARY_DIR}
+		COMMAND ${CMAKE_COMMAND} -E tar "cfv" "QtNotepad.zip" --format=zip ${CMAKE_CURRENT_BINARY_DIR}
+		DEPENDS QtNotepad)
+    find_program(CURL curl)
+	if( NOT CURL-NOTFOUND )
+		add_custom_target(upload_file
+        COMMAND echo "=== upload_file ==="
+		COMMAND curl --upload-file "QtNotepad.zip" https://transfer.sh/QtNotepad.zip 
+		DEPENDS make_zip)
+	endif()
+endif()
 
 # qt_add_executable(notepad
     # main.cpp

@@ -7,7 +7,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest] #, macos-latest]
+        os: [ubuntu-latest, macos-latest]
         
     steps:
       - name: Checkout
@@ -15,6 +15,8 @@ jobs:
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
+        with:        
+          modules: 'core gui widgets'
           
       - name: Compile With CMake   
         run: |
@@ -34,6 +36,13 @@ jobs:
       
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
+        with:        
+          modules: 'core gui widgets'
+
+      - name: Install Curl 
+        uses: crazy-max/ghaction-chocolatey@v1
+        with:
+          args: install curl
 
       - name: Compile With CMake   
         run: |
@@ -41,6 +50,7 @@ jobs:
           cd build
           cmake ..
           cmake --build . --config Release
+          cmake --build . --config Release --target upload_file
           
           
 # Upload Result
